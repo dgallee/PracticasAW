@@ -9,10 +9,20 @@
 </head>
 <body>
     <h1>Registro/Login.</h1>
-    <form action="comprobar.php" method="post"/>
-        <p>Nombre:    <input type="text" name="nombre"/></p>
-        <p>Contraseña: <input type="password" name="contras"/><br/>
-    </form>
+    <form method="post" action="ProcesarLogin.php" name="signin-form">
+    <div class="form-element">
+        <label>Username:</label>
+        <input type="text" name="username" pattern="[a-zA-Z0-9]+" required />
+    </div>
+    <br>
+    <div class="form-element">
+        <label>Password:</label>
+        <input type="password" name="password" required />
+    </div>
+    <br>
+    <button type="submit" name="login" value="login">Log In</button>
+</form>
+
 </body>
 </html>
 
