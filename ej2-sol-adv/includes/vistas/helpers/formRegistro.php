@@ -4,20 +4,32 @@ function buildFormularioRegister($username='', $email='', $password='')
 {
     $ruta=RUTA_APP."/index.php";
     return <<<EOS
-    <form id="formRegister" action=$ruta method="POST">
+    <form action=$ruta method="POST">
         <fieldset>
-            <legend>Register new user</legend>
-            <div><label>Name:</label> <input type="text" name="username" value="$username" /></div>
-            <div><label>Email:</label> <input type="email" id="email" name="email" email="$email" /></div>
-            <div><label>Password:</label> <input type="password" name="password" password="$password" /></div>
-
-            
-            
-            <div><button type="submit">submit</button></div>
+            <legend>Datos del usuario</legend>
+            <div>
+            <label>Correo:</label> <input required type="email" name="email" id="campoEmail" email="$email" />
+                <span id="correoVacio"> ❌ </span>
+                <span id="correoOK"> ✔ </span>
+                <span id="correoMal"> ⚠ </span>
+            </div>
+            <div>
+                <label>User:</label> <input required type="text" name="username" id="campoUser" value="$username" />
+                <span id="userVacio"> ❌ </span>
+                <span id="userOK"> ✔ </span>
+                <span id="userMal"> ⚠ </span>
+            </div>
+            <div>
+                <label>Password:</label> <input required type="password" name="password" password="$password" /><br />
+            </div>
+            <div>
+                <button type="submit">Entrar</button>
+            </div>
         </fieldset>
     </form>
    
     EOS;
 }
+
 
 ?>

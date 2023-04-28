@@ -1,37 +1,48 @@
-$("#email").change(function(){
-    correoValido() ;
-    const campo = $("#email"); // referencia jquery al campo
-    campo[0].setCustomValidity(""); // limpia validaciones previas
-    // validación html5, porque el campo es <input type="email" ...>
-    const esCorreoValido = campo[0].checkValidity();
-    if (esCorreoValido && correoValidoComplu(campo.val())) {
-        // el correo es válido y acaba por @ucm.es
-       
-        campo.removeClass("icono-rojo");
-       
-        campo.addClass("icono-verde");
-        // <-- aquí pongo la marca apropiada, y quito (si la hay) la otra
-        // y lo marco como válido
-        campo[0].setCustomValidity("");
-    } else {
 
-        campo.removeClass("icono-verde");
-        campo.addClass("icono-rojo");
-        // <-- aquí pongo la marca apropiada, y quito (si la hay) la otra
-        // y pongo un mensaje como no-válido
-        campo[0].setCustomValidity(
-        "El correo debe ser válido y acabar por @ucm.es");
-    }
-   });
 
-   function correoValidoComplu(correo) {
-        const dominioComplu = "@ucm.es"; // Dominio de correo electrónico de la UCM
-        const dominioCorreo = correo.slice(-dominioComplu.length); // Últimos caracteres del correo
-        return dominioCorreo === dominioComplu;
-    }
 
-    function correoValido() {
-        const campo = $("#email");
-        campo[0].setCustomValidity("");
-        campo.addClass("icono-rojo");
-    }
+    $(document).ready(function(){
+        
+         $("#correoOK").hide();
+         $("#userOK").hide();
+         $("#correoMal").hide();
+         $("#userMal").hide();
+        
+         $("#campoEmail").change(function(){
+            const campo = $("#campoEmail"); // referencia jquery al campo
+            campo[0].setCustomValidity(""); // limpia validaciones previas
+            // validación html5, porque el campo es <input type="email" ...>
+            const esCorreoValido = campo[0].checkValidity();
+            if (esCorreoValido && correoValidoComplu(campo.val())) { // El correo esválido y acaba por @ucm.es: marcamos y limpiamos quejas
+                // Tu código aquí: coloca la marca correcta
+                $("#correoMal").hide();
+                $("#correoOK").show();
+                $("#correoVacio").hide();
+                campo[0].setCustomValidity("");
+            } else { // Correo invalido: ponemos una marca y nos quejamos
+                // Tu código aquí: coloca la marca correcta
+                if (campo.val() == "") { // Correo vacío
+                $("#correoMal").hide();
+                $("#correoVacio").show();
+                }
+            else { // Correo inválido
+                $("#correoMal").show();
+                $("#correoVacio").hide();
+            }
+            $("#correoOK").hide();
+            campo[0].setCustomValidity("El correo debe ser válido y acabar por @ucm.es");
+         }
+         });
+        
+        
+         $("#campoUser").change(function(){
+            var url = "comprobarUsuario.php?user=" + $("#campoUser").val();
+            $.get(url,usuarioExiste);
+         });
+        
+        
+         function correoValidoComplu(correo) {
+         // Tu codigo aqui (devuelve true ó false)
+            return correo.substring(correo.indexOf('@')) === "@ucm.es";
+         }
+        })
